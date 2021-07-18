@@ -188,18 +188,6 @@ const Dashboard = () => {
                 <div className="option-card">
                     <img src={RED} alt="preview" onClick={() => setSelectedBase(RED)} className="option-card-img"></img>
                 </div>
-
-                <div className="option-card">
-                    <img src={ROSE_CANNELLE} alt="preview" onClick={() => setSelectedBase(ROSE_CANNELLE)} className="option-card-img"></img>
-                </div>
-
-                <div className="option-card">
-                    <img src={WHITE} alt="preview" onClick={() => setSelectedBase(WHITE)} className="option-card-img"></img>
-                </div>
-
-                <div className="option-card">
-                    <img src={WINTER_WHITE} alt="preview" onClick={() => setSelectedBase(WINTER_WHITE)} className="option-card-img"></img>
-                </div>
                 
 
             </div>
