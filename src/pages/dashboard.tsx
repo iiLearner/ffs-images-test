@@ -48,10 +48,7 @@ const Dashboard = () => {
         let top: Image
         let bottom: Image;
 
-        if(selectedLogo === "gold"){
-            top = logo_gold;
-            bottom = logo_base_gold;
-        }else if(selectedLogo === "platinum"){
+        if(selectedLogo === "platinum"){
             top = logo_platinum;
             bottom = logo_base_platinum;
         }else if(selectedLogo === "silver"){
@@ -89,19 +86,21 @@ const Dashboard = () => {
       }
 
     const getImage = async () => {
-
         let Images: any[] = [];
         let chars = []
 
         for(let i=0; i<text.length; i++) {
             const char = text.charAt(i)
-            chars.push(char)
+            const charCode = text.charCodeAt(i)
+            if(isLetter(charCode))
+                chars.push(char)
         }
         return Promise.all(
             chars.map(async (char, index: number) => {
+                const start = chars.length === 1 ? 350 : chars.length === 2 ? 300 : 250
                 const path = `./letters/${selectedLogo}/${char}.png`
                 const response = await fetch(path)
-                Images.push({src: 'data:image/png;base64,'+base64Encode(await response.arrayBuffer()), x: 200+(index*100), y:350})
+                Images.push({src: 'data:image/png;base64,'+base64Encode(await response.arrayBuffer()), x: start+(index*100), y:350})
             })
         ).then(() => Images)
     }
@@ -121,9 +120,9 @@ const Dashboard = () => {
         
     }, [text])
 
-    const onKeyPress = (event: any) => {
-        return false
-      }
+    const isLetter = (charCode: any) => {
+        return (charCode >= 65 && charCode <= 90) || (charCode >= 97 && charCode <= 122)
+    }
 
     return(
 
@@ -215,13 +214,11 @@ const Dashboard = () => {
                     <img src={logo_silver} alt="preview" onClick={() => setSelectedLogo("silver")} className="option-card-img"></img>
                 </div>
             </div>
-
-            <div className="options">
-                <input type="text" maxLength={4} pattern="[A-Za-z]" onChange={e => debouncedSave(e.target.value)}></input>
-
+        
+            <div className="options">        
+                <input type="text" maxLength={3} placeholder={"Only a-z letters allowed"} onChange={e => debouncedSave(e.target.value)}></input>
             </div>
         </div>
-
     )
 
 }
